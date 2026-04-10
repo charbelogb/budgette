@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: budgette
+      POSTGRES_USER: budgette
+      POSTGRES_PASSWORD: budgette
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U budgette"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  simulator:
+    build: ./budgette-simulator
+    ports:
+      - "8081:8081"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/swagger-ui.html"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+  backend:
+    build: ./budgette-backend
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/budgette
+      DATABASE_USER: budgette
+      DATABASE_PASSWORD: budgette
+      MTN_API_URL: http://simulator:8081/api/mtn
+      MOOV_API_URL: http://simulator:8081/api/moov
+      JWT_SECRET: budgette-super-secret-key-change-in-production-2024
+    depends_on:
+      postgres:
+        condition: service_healthy
+      simulator:
+        condition: service_started
+
+  frontend:
+    build: ./budgette-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: budgette-backend
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/budgette}
+    username: ${DATABASE_USER:budgette}
+    password: ${DATABASE_PASSWORD:budgette}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+providers:
+  mtn:
+    base-url: ${MTN_API_URL:http://localhost:8081/api/mtn}
+  moov:
+    base-url: ${MOOV_API_URL:http://localhost:8081/api/moov}
+
+jwt:
+  secret: ${JWT_SECRET:your-very-long-secret-key-for-budgette-app-2024-please-change}
+  expiration: 86400000
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
