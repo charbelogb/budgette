@@ -37,10 +37,10 @@ public class AccountController {
 
         Account account = addAccountUseCase.addAccount(new AddAccountUseCase.AddAccountCommand(
                 userId,
-                request.getOperator(),
-                request.getCountry(),
-                request.getPhoneNumber(),
-                request.getAccountId()
+                request.operator(),
+                request.country(),
+                request.phoneNumber(),
+                request.accountId()
         ));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(webMapper.toAccountResponse(account));

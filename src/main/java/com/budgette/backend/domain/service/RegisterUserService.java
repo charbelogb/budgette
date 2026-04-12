@@ -4,6 +4,7 @@ import com.budgette.backend.domain.model.User;
 import com.budgette.backend.domain.port.in.RegisterUserUseCase;
 import com.budgette.backend.domain.port.out.UserRepositoryPort;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class RegisterUserService implements RegisterUserUseCase {
@@ -27,7 +28,8 @@ public class RegisterUserService implements RegisterUserUseCase {
                 command.email(),
                 passwordEncoder.encode(command.password()),
                 command.firstName(),
-                command.lastName()
+                command.lastName(),
+                new ArrayList<>()
         );
 
         return userRepositoryPort.save(user);

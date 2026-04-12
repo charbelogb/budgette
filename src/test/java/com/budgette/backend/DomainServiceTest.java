@@ -67,7 +67,7 @@ class DomainServiceTest {
     @Test
     void shouldLoginUser() {
         String userId = UUID.randomUUID().toString();
-        User user = new User(userId, "test@example.com", "encoded_password123", "Jean", "Dupont");
+        User user = new User(userId, "test@example.com", "encoded_password123", "Jean", "Dupont", new java.util.ArrayList<>());
         when(userRepositoryPort.findByEmail("test@example.com")).thenReturn(Optional.of(user));
 
         LoginUseCase.LoginCommand command = new LoginUseCase.LoginCommand("test@example.com", "password123");
@@ -81,7 +81,7 @@ class DomainServiceTest {
     @Test
     void shouldThrowWhenLoginWithWrongPassword() {
         String userId = UUID.randomUUID().toString();
-        User user = new User(userId, "test@example.com", "encoded_correctPassword", "Jean", "Dupont");
+        User user = new User(userId, "test@example.com", "encoded_correctPassword", "Jean", "Dupont", new java.util.ArrayList<>());
         when(userRepositoryPort.findByEmail("test@example.com")).thenReturn(Optional.of(user));
 
         LoginUseCase.LoginCommand command = new LoginUseCase.LoginCommand("test@example.com", "wrongPassword");
@@ -91,7 +91,7 @@ class DomainServiceTest {
 
     @Test
     void userFullNameShouldCombineFirstAndLastName() {
-        User user = new User("1", "email@test.com", "hash", "Jean", "Dupont");
+        User user = new User("1", "email@test.com", "hash", "Jean", "Dupont", new java.util.ArrayList<>());
         assertEquals("Jean Dupont", user.getFullName());
     }
 }

@@ -16,53 +16,53 @@ public class WebMapper {
 
     public AccountResponse toAccountResponse(Account account) {
         if (account == null) return null;
-        AccountResponse response = new AccountResponse();
-        response.setId(account.getId());
-        response.setUserId(account.getUserId());
-        response.setOperator(account.getOperator());
-        response.setCountry(account.getCountry());
-        response.setPhoneNumber(account.getPhoneNumber());
-        response.setAccountId(account.getAccountId());
-        response.setBalance(account.getBalance());
-        response.setActive(account.isActive());
-        return response;
+        return new AccountResponse(
+                account.getId(),
+                account.getUserId(),
+                account.getOperator(),
+                account.getCountry(),
+                account.getPhoneNumber(),
+                account.getAccountId(),
+                account.getBalance(),
+                account.isActive()
+        );
     }
 
     public TransactionResponse toTransactionResponse(Transaction transaction) {
         if (transaction == null) return null;
-        TransactionResponse response = new TransactionResponse();
-        response.setId(transaction.getId());
-        response.setAccountId(transaction.getAccountId());
-        response.setType(transaction.getType());
-        response.setAmount(transaction.getAmount());
-        response.setFees(transaction.getFees());
-        response.setBalanceAfter(transaction.getBalanceAfter());
-        response.setCounterpartyName(transaction.getCounterpartyName());
-        response.setCounterpartyPhone(transaction.getCounterpartyPhone());
-        response.setDescription(transaction.getDescription());
-        response.setDate(transaction.getDate());
-        response.setExternalId(transaction.getExternalId());
-        return response;
+        return new TransactionResponse(
+                transaction.getId(),
+                transaction.getAccountId(),
+                transaction.getType(),
+                transaction.getAmount(),
+                transaction.getFees(),
+                transaction.getBalanceAfter(),
+                transaction.getCounterpartyName(),
+                transaction.getCounterpartyPhone(),
+                transaction.getDescription(),
+                transaction.getDate(),
+                transaction.getExternalId()
+        );
     }
 
     public DashboardResponse toDashboardResponse(GetDashboardUseCase.DashboardResult result) {
         if (result == null) return null;
-        DashboardResponse response = new DashboardResponse();
-        response.setUserId(result.userId());
-        response.setFullName(result.fullName());
-        response.setTotalBalance(result.totalBalance());
-        response.setCurrency("FCFA");
 
         List<AccountResponse> accountResponses = result.accounts().stream()
                 .map(this::toAccountResponse)
                 .collect(Collectors.toList());
-        response.setAccounts(accountResponses);
 
         List<TransactionResponse> transactionResponses = result.recentTransactions().stream()
                 .map(this::toTransactionResponse)
                 .collect(Collectors.toList());
-        response.setRecentTransactions(transactionResponses);
 
-        return response;
+        return new DashboardResponse(
+                result.userId(),
+                result.fullName(),
+                result.totalBalance(),
+                "FCFA",
+                accountResponses,
+                transactionResponses
+        );
     }
 }
