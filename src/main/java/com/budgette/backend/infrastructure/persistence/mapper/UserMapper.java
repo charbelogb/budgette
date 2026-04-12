@@ -9,14 +9,13 @@ public class UserMapper {
 
     public User toDomain(UserEntity entity) {
         if (entity == null) return null;
-        User user = new User(
+        return new User(
                 entity.getId(),
                 entity.getEmail(),
                 entity.getPasswordHash(),
                 entity.getFirstName(),
                 entity.getLastName()
         );
-        return user;
     }
 
     public UserEntity toEntity(User user) {

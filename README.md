@@ -6,9 +6,8 @@ Backend du SaaS **Budgette** — suivi de finances personnelles centré sur le *
 
 | Composant | Technologie |
 |---|---|
-| Langage | Java 21 |
+| Langage | Java 17 |
 | Framework | Spring Boot 3.2.x |
-| Build | Maven |
 | Base de données | PostgreSQL |
 | ORM | Spring Data JPA + Hibernate |
 | Auth | Spring Security + JWT (jjwt) |
@@ -131,7 +130,7 @@ Documentation interactive : **http://localhost:8080/swagger-ui.html**
 
 ### Prérequis
 
-- Java 21
+- Java 17
 - Maven 3.9+
 - PostgreSQL 15+
 - (Optionnel) Le simulateur [budgette-simulator](https://github.com/charbelogb/budgette-simulator) sur le port 8081
