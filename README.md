@@ -11,7 +11,7 @@ Backend du SaaS **Budgette** — suivi de finances personnelles centré sur le *
 | Base de données | PostgreSQL |
 | ORM | Spring Data JPA + Hibernate |
 | Auth | Spring Security + JWT (jjwt) |
-| API HTTP externe | Spring WebFlux WebClient |
+| API HTTP externe | Spring Cloud OpenFeign |
 | Documentation API | Swagger / OpenAPI 3 (springdoc) |
 | Port | 8080 |
 | Architecture | **Hexagonale pure (Ports & Adapters)** |
@@ -38,7 +38,7 @@ Ce projet suit strictement l'**Architecture Hexagonale** (Ports & Adapters), aus
 │                                                     │
 │  Adapters (implémentent les ports) :                │
 │  • persistence/ (JPA, PostgreSQL)                   │
-│  • mobilemoney/ (WebClient → simulateur/vraie API)  │
+│  • mobilemoney/ (FeignClient → simulateur/vraie API)  │
 │  • web/         (REST controllers)                  │
 │  • security/    (JWT, Spring Security)              │
 └─────────────────────────────────────────────────────┘
@@ -46,7 +46,7 @@ Ce projet suit strictement l'**Architecture Hexagonale** (Ports & Adapters), aus
 
 ### Règles fondamentales
 
-- ✅ Le package `domain/` ne contient **aucune** annotation Spring, JPA, Lombok, ou autre framework — uniquement du **Java pur**.
+- ✅ Le package `domain/` ne contient **aucune** annotation Spring, JPA, ou autre annotation de framework runtime — les annotations Lombok (`@Getter`, `@Setter`, `@Builder`, etc.) sont acceptées car elles génèrent du code à la compilation.
 - ✅ Les **ports** (`port/in/` et `port/out/`) sont des interfaces Java pures définies dans le domaine.
 - ✅ Les **adapters** dans `infrastructure/` implémentent les ports.
 - ✅ Toute la **logique métier** réside dans le domaine.
@@ -92,12 +92,12 @@ src/main/java/com/budgette/backend/
     │   ├── repository/
     │   ├── mapper/
     │   └── adapter/
-    ├── mobilemoney/                 # Adapter WebClient → simulateur/vraie API
+    ├── mobilemoney/                 # Adapter FeignClient → simulateur/vraie API
     │   ├── MobileMoneyProviderAdapter.java
+    │   ├── client/
     │   ├── dto/
     │   └── mapper/
-    ├── web/                         # Adapter REST (controllers, DTOs)
-    │   ├── controller/
+    ├── web/                         # DTOs et mappers web
     │   ├── dto/
     │   └── mapper/
     ├── security/                    # JWT + Spring Security
@@ -105,9 +105,10 @@ src/main/java/com/budgette/backend/
     │   ├── JwtAuthFilter.java
     │   └── SecurityConfig.java
     └── config/                      # Beans Spring (wiring domaine ↔ adapters)
-        ├── WebClientConfig.java
         ├── BeanConfig.java
         └── SwaggerConfig.java
+└── application/                     # Controllers REST
+    └── controller/
 ```
 
 ---
