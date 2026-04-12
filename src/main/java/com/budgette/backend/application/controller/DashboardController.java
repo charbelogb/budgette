@@ -1,4 +1,4 @@
-package com.budgette.backend.infrastructure.web.controller;
+package com.budgette.backend.application.controller;
 
 import com.budgette.backend.domain.port.in.GetDashboardUseCase;
 import com.budgette.backend.infrastructure.web.dto.response.DashboardResponse;

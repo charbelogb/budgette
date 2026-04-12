@@ -1,4 +1,4 @@
-package com.budgette.backend.infrastructure.web.controller;
+package com.budgette.backend.application.controller;
 
 import com.budgette.backend.domain.model.Transaction;
 import com.budgette.backend.domain.port.in.SyncTransactionsUseCase;

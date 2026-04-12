@@ -14,7 +14,8 @@ public class UserMapper {
                 entity.getEmail(),
                 entity.getPasswordHash(),
                 entity.getFirstName(),
-                entity.getLastName()
+                entity.getLastName(),
+                new java.util.ArrayList<>()
         );
     }
 

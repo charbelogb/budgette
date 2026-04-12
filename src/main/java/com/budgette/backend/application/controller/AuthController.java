@@ -1,4 +1,4 @@
-package com.budgette.backend.infrastructure.web.controller;
+package com.budgette.backend.application.controller;
 
 import com.budgette.backend.domain.model.User;
 import com.budgette.backend.domain.port.in.LoginUseCase;
@@ -30,14 +30,14 @@ public class AuthController {
     @Operation(summary = "Inscription d'un nouvel utilisateur")
     public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
         User user = registerUserUseCase.register(new RegisterUserUseCase.RegisterUserCommand(
-                request.getEmail(),
-                request.getPassword(),
-                request.getFirstName(),
-                request.getLastName()
+                request.email(),
+                request.password(),
+                request.firstName(),
+                request.lastName()
         ));
 
         LoginUseCase.LoginResult loginResult = loginUseCase.login(
-                new LoginUseCase.LoginCommand(request.getEmail(), request.getPassword())
+                new LoginUseCase.LoginCommand(request.email(), request.password())
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new AuthResponse(
@@ -53,7 +53,7 @@ public class AuthController {
     @Operation(summary = "Connexion d'un utilisateur")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
         LoginUseCase.LoginResult result = loginUseCase.login(
-                new LoginUseCase.LoginCommand(request.getEmail(), request.getPassword())
+                new LoginUseCase.LoginCommand(request.email(), request.password())
         );
         return ResponseEntity.ok(new AuthResponse(
                 result.token(),

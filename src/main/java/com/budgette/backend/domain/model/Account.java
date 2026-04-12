@@ -1,7 +1,18 @@
 package com.budgette.backend.domain.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Account {
 
     private String id;
@@ -12,42 +23,4 @@ public class Account {
     private String accountId;
     private BigDecimal balance;
     private boolean active;
-
-    public Account() {}
-
-    public Account(String id, String userId, Operator operator, Country country,
-                   String phoneNumber, String accountId, BigDecimal balance, boolean active) {
-        this.id = id;
-        this.userId = userId;
-        this.operator = operator;
-        this.country = country;
-        this.phoneNumber = phoneNumber;
-        this.accountId = accountId;
-        this.balance = balance;
-        this.active = active;
-    }
-
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-
-    public String getUserId() { return userId; }
-    public void setUserId(String userId) { this.userId = userId; }
-
-    public Operator getOperator() { return operator; }
-    public void setOperator(Operator operator) { this.operator = operator; }
-
-    public Country getCountry() { return country; }
-    public void setCountry(Country country) { this.country = country; }
-
-    public String getPhoneNumber() { return phoneNumber; }
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
-
-    public String getAccountId() { return accountId; }
-    public void setAccountId(String accountId) { this.accountId = accountId; }
-
-    public BigDecimal getBalance() { return balance; }
-    public void setBalance(BigDecimal balance) { this.balance = balance; }
-
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
 }
