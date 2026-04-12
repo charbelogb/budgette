@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+providers:
+  mtn:
+    base-url: ${MTN_API_URL:http://localhost:8081/api/mtn}
+  moov:
+    base-url: ${MOOV_API_URL:http://localhost:8081/api/moov}
+
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/budgette}
+    username: ${DATABASE_USER:budgette}
+    password: ${DATABASE_PASSWORD:budgette}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+jwt:
+  secret: ${JWT_SECRET:budgette-secret-key-change-in-production-min32chars}
+  expiration: 86400000
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
