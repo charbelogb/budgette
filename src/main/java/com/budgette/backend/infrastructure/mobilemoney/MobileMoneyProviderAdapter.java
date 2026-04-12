@@ -3,8 +3,8 @@ package com.budgette.backend.infrastructure.mobilemoney;
 import com.budgette.backend.domain.model.Operator;
 import com.budgette.backend.domain.model.Transaction;
 import com.budgette.backend.domain.port.out.MobileMoneyProviderPort;
-import com.budgette.backend.infrastructure.mobilemoney.client.MTNFeignClient;
-import com.budgette.backend.infrastructure.mobilemoney.client.MoovFeignClient;
+import com.budgette.backend.infrastructure.mobilemoney.client.MoovMoneyFeignClient;
+import com.budgette.backend.infrastructure.mobilemoney.client.MtnMoneyFeignClient;
 import com.budgette.backend.infrastructure.mobilemoney.dto.ProviderAccountInfoResponse;
 import com.budgette.backend.infrastructure.mobilemoney.dto.ProviderBalanceResponse;
 import com.budgette.backend.infrastructure.mobilemoney.dto.ProviderTransactionResponse;
@@ -20,12 +20,12 @@ import java.util.stream.Collectors;
 @Component
 public class MobileMoneyProviderAdapter implements MobileMoneyProviderPort {
 
-    private final MTNFeignClient mtnClient;
-    private final MoovFeignClient moovClient;
+    private final MtnMoneyFeignClient mtnClient;
+    private final MoovMoneyFeignClient moovClient;
     private final ProviderTransactionMapper transactionMapper;
 
-    public MobileMoneyProviderAdapter(MTNFeignClient mtnClient,
-                                      MoovFeignClient moovClient,
+    public MobileMoneyProviderAdapter(MtnMoneyFeignClient mtnClient,
+                                      MoovMoneyFeignClient moovClient,
                                       ProviderTransactionMapper transactionMapper) {
         this.mtnClient = mtnClient;
         this.moovClient = moovClient;
@@ -51,9 +51,10 @@ public class MobileMoneyProviderAdapter implements MobileMoneyProviderPort {
         String fromStr = from.format(formatter);
         String toStr = to.format(formatter);
 
-        List<ProviderTransactionResponse> responses = operator == Operator.MTN
-                ? mtnClient.getTransactions(accountId, fromStr, toStr)
-                : moovClient.getTransactions(accountId, fromStr, toStr);
+        List<ProviderTransactionResponse> responses =
+                operator == Operator.MTN
+                        ? mtnClient.getTransactions(accountId, fromStr, toStr)
+                        : moovClient.getTransactions(accountId, fromStr, toStr);
 
         if (responses == null) return List.of();
 

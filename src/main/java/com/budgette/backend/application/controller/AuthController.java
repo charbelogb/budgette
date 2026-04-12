@@ -1,11 +1,11 @@
 package com.budgette.backend.application.controller;
 
+import com.budgette.backend.application.dto.request.LoginRequest;
+import com.budgette.backend.application.dto.request.RegisterRequest;
+import com.budgette.backend.application.dto.response.AuthResponse;
 import com.budgette.backend.domain.model.User;
 import com.budgette.backend.domain.port.in.LoginUseCase;
 import com.budgette.backend.domain.port.in.RegisterUserUseCase;
-import com.budgette.backend.infrastructure.web.dto.request.LoginRequest;
-import com.budgette.backend.infrastructure.web.dto.request.RegisterRequest;
-import com.budgette.backend.infrastructure.web.dto.response.AuthResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

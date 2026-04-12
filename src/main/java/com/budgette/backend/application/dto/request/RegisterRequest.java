@@ -1,4 +1,4 @@
-package com.budgette.backend.infrastructure.web.dto.request;
+package com.budgette.backend.application.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -38,7 +38,7 @@ Ce projet suit strictement l'**Architecture Hexagonale** (Ports & Adapters), aus
 │                                                     │
 │  Adapters (implémentent les ports) :                │
 │  • persistence/ (JPA, PostgreSQL)                   │
-│  • mobilemoney/ (FeignClient → simulateur/vraie API)  │
+│  • mobilemoney/ (WebClient → simulateur/vraie API)  │
 │  • web/         (REST controllers)                  │
 │  • security/    (JWT, Spring Security)              │
 └─────────────────────────────────────────────────────┘
@@ -46,7 +46,7 @@ Ce projet suit strictement l'**Architecture Hexagonale** (Ports & Adapters), aus
 
 ### Règles fondamentales
 
-- ✅ Le package `domain/` ne contient **aucune** annotation Spring, JPA, ou autre annotation de framework runtime — les annotations Lombok (`@Getter`, `@Setter`, `@Builder`, etc.) sont acceptées car elles génèrent du code à la compilation.
+- ✅ Le package `domain/` ne contient **aucune** annotation Spring, JPA, Lombok, ou autre framework — uniquement du **Java pur**.
 - ✅ Les **ports** (`port/in/` et `port/out/`) sont des interfaces Java pures définies dans le domaine.
 - ✅ Les **adapters** dans `infrastructure/` implémentent les ports.
 - ✅ Toute la **logique métier** réside dans le domaine.
@@ -61,7 +61,7 @@ src/main/java/com/budgette/backend/
 │
 ├── domain/                          # ❤️ Cœur — aucune dépendance externe
 │   ├── model/
-│   │   ├── User.java
+│   │   ├── User.java                 # @Data Lombok — aucune annotation Spring/JPA
 │   │   ├── Account.java
 │   │   ├── Transaction.java
 │   │   ├── Operator.java            # Enum : MTN, MOOV
@@ -86,6 +86,18 @@ src/main/java/com/budgette/backend/
 │       ├── SyncTransactionsService.java
 │       └── GetDashboardService.java
 │
+├── application/                     # 🌐 Couche présentation — REST controllers
+│   ├── controller/
+│   │   ├── AuthController.java
+│   │   ├── AccountController.java
+│   │   ├── TransactionController.java
+│   │   └── DashboardController.java
+│   ├── dto/
+│   │   ├── request/
+│   │   └── response/
+│   └── mapper/
+│       └── WebMapper.java
+│
 └── infrastructure/
     ├── persistence/                 # Adapter JPA/PostgreSQL
     │   ├── entity/
@@ -95,10 +107,9 @@ src/main/java/com/budgette/backend/
     ├── mobilemoney/                 # Adapter FeignClient → simulateur/vraie API
     │   ├── MobileMoneyProviderAdapter.java
     │   ├── client/
-    │   ├── dto/
-    │   └── mapper/
-    ├── web/                         # DTOs et mappers web
-    │   ├── dto/
+    │   │   ├── MtnMoneyFeignClient.java
+    │   │   └── MoovMoneyFeignClient.java
+    │   ├── dto/                     # Java records (ProviderBalanceResponse, etc.)
     │   └── mapper/
     ├── security/                    # JWT + Spring Security
     │   ├── JwtService.java
@@ -107,8 +118,6 @@ src/main/java/com/budgette/backend/
     └── config/                      # Beans Spring (wiring domaine ↔ adapters)
         ├── BeanConfig.java
         └── SwaggerConfig.java
-└── application/                     # Controllers REST
-    └── controller/
 ```
 
 ---

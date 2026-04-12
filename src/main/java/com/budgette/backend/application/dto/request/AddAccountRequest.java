@@ -1,4 +1,4 @@
-package com.budgette.backend.infrastructure.web.dto.request;
+package com.budgette.backend.application.dto.request;
 
 import com.budgette.backend.domain.model.Country;
 import com.budgette.backend.domain.model.Operator;

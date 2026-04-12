@@ -1,10 +1,10 @@
 package com.budgette.backend.application.controller;
 
+import com.budgette.backend.application.dto.request.AddAccountRequest;
+import com.budgette.backend.application.dto.response.AccountResponse;
+import com.budgette.backend.application.mapper.WebMapper;
 import com.budgette.backend.domain.model.Account;
 import com.budgette.backend.domain.port.in.AddAccountUseCase;
-import com.budgette.backend.infrastructure.web.dto.request.AddAccountRequest;
-import com.budgette.backend.infrastructure.web.dto.response.AccountResponse;
-import com.budgette.backend.infrastructure.web.mapper.WebMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;

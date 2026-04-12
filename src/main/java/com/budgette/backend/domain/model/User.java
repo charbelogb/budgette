@@ -1,19 +1,15 @@
 package com.budgette.backend.domain.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class User {
 
     private String id;
@@ -21,8 +17,16 @@ public class User {
     private String passwordHash;
     private String firstName;
     private String lastName;
-    @Builder.Default
     private List<Account> accounts = new ArrayList<>();
+
+    public User(String id, String email, String passwordHash, String firstName, String lastName) {
+        this.id = id;
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.accounts = new ArrayList<>();
+    }
 
     public String getFullName() {
         return firstName + " " + lastName;

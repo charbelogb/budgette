@@ -1,4 +1,4 @@
-package com.budgette.backend.infrastructure.web.dto.response;
+package com.budgette.backend.application.dto.response;
 
 public record AuthResponse(
     String token,

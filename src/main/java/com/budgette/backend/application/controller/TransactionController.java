@@ -1,9 +1,9 @@
 package com.budgette.backend.application.controller;
 
+import com.budgette.backend.application.dto.response.TransactionResponse;
+import com.budgette.backend.application.mapper.WebMapper;
 import com.budgette.backend.domain.model.Transaction;
 import com.budgette.backend.domain.port.in.SyncTransactionsUseCase;
-import com.budgette.backend.infrastructure.web.dto.response.TransactionResponse;
-import com.budgette.backend.infrastructure.web.mapper.WebMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
