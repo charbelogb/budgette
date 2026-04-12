@@ -1,11 +1,11 @@
-package com.budgette.backend.infrastructure.web.mapper;
+package com.budgette.backend.application.mapper;
 
+import com.budgette.backend.application.dto.response.AccountResponse;
+import com.budgette.backend.application.dto.response.DashboardResponse;
+import com.budgette.backend.application.dto.response.TransactionResponse;
 import com.budgette.backend.domain.model.Account;
 import com.budgette.backend.domain.model.Transaction;
 import com.budgette.backend.domain.port.in.GetDashboardUseCase;
-import com.budgette.backend.infrastructure.web.dto.response.AccountResponse;
-import com.budgette.backend.infrastructure.web.dto.response.DashboardResponse;
-import com.budgette.backend.infrastructure.web.dto.response.TransactionResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

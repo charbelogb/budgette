@@ -11,7 +11,7 @@ Backend du SaaS **Budgette** — suivi de finances personnelles centré sur le *
 | Base de données | PostgreSQL |
 | ORM | Spring Data JPA + Hibernate |
 | Auth | Spring Security + JWT (jjwt) |
-| API HTTP externe | Spring WebFlux WebClient |
+| API HTTP externe | Spring Cloud OpenFeign |
 | Documentation API | Swagger / OpenAPI 3 (springdoc) |
 | Port | 8080 |
 | Architecture | **Hexagonale pure (Ports & Adapters)** |
@@ -61,7 +61,7 @@ src/main/java/com/budgette/backend/
 │
 ├── domain/                          # ❤️ Cœur — aucune dépendance externe
 │   ├── model/
-│   │   ├── User.java
+│   │   ├── User.java                 # @Data Lombok — aucune annotation Spring/JPA
 │   │   ├── Account.java
 │   │   ├── Transaction.java
 │   │   ├── Operator.java            # Enum : MTN, MOOV
@@ -86,26 +86,36 @@ src/main/java/com/budgette/backend/
 │       ├── SyncTransactionsService.java
 │       └── GetDashboardService.java
 │
+├── application/                     # 🌐 Couche présentation — REST controllers
+│   ├── controller/
+│   │   ├── AuthController.java
+│   │   ├── AccountController.java
+│   │   ├── TransactionController.java
+│   │   └── DashboardController.java
+│   ├── dto/
+│   │   ├── request/
+│   │   └── response/
+│   └── mapper/
+│       └── WebMapper.java
+│
 └── infrastructure/
     ├── persistence/                 # Adapter JPA/PostgreSQL
     │   ├── entity/
     │   ├── repository/
     │   ├── mapper/
     │   └── adapter/
-    ├── mobilemoney/                 # Adapter WebClient → simulateur/vraie API
+    ├── mobilemoney/                 # Adapter FeignClient → simulateur/vraie API
     │   ├── MobileMoneyProviderAdapter.java
-    │   ├── dto/
-    │   └── mapper/
-    ├── web/                         # Adapter REST (controllers, DTOs)
-    │   ├── controller/
-    │   ├── dto/
+    │   ├── client/
+    │   │   ├── MtnMoneyFeignClient.java
+    │   │   └── MoovMoneyFeignClient.java
+    │   ├── dto/                     # Java records (ProviderBalanceResponse, etc.)
     │   └── mapper/
     ├── security/                    # JWT + Spring Security
     │   ├── JwtService.java
     │   ├── JwtAuthFilter.java
     │   └── SecurityConfig.java
     └── config/                      # Beans Spring (wiring domaine ↔ adapters)
-        ├── WebClientConfig.java
         ├── BeanConfig.java
         └── SwaggerConfig.java
 ```
